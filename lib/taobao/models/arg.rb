@@ -1,16 +1,15 @@
 require 'taobao/model'
 
 module Taobao
-  class Error < Model
+  class Arg < Model
     def self.elm_name
-      "error"
+      "arg"
     end
 
     def self.attr_names
       [
-       :msg,
-       :code,
-       :args
+       :name,
+       :val
       ]
     end
 
@@ -18,12 +17,9 @@ module Taobao
       attr_accessor a
     end
 
-    def to_s
-      "Taobao::Error(#{code}): #{msg}"
+    def push_sym(stack)
+      stack.push(:val=)
     end
 
-    def push_sym(stack)
-      stack.push(:msg=)
-    end
   end
 end

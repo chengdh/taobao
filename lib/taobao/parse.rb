@@ -14,6 +14,7 @@ module Taobao
         attr_accessor :total
         attr_accessor :totalResults
         attr_accessor :lastModified
+        attr_accessor :list
 
         def push_sym(stack)
         end
@@ -21,6 +22,7 @@ module Taobao
 
       def model_classes
         [
+         Taobao::Arg,
          Taobao::Error,
          Taobao::ErrorRsp,
          Taobao::SimpleUserInfo,
@@ -61,7 +63,8 @@ module Taobao
           "prop_values" => TotalArray,
           "product_imgs" => TotalArray,
           "item_lists" => TotalArray,
-          "category_lists" => TotalArray
+          "category_lists" => TotalArray,
+          "args" => TotalArray
         }
       end
 
@@ -96,6 +99,7 @@ module Taobao
 
         if k = elm_name_to_class(name)
           @stack.push(k.new)
+          attrs.each {|k,v| @stack.last.send("#{k}=", v)}
           @stack.last.push_sym(@stack)
         end
 
@@ -104,13 +108,14 @@ module Taobao
           @stack.push :no_op
         end
 
-        pp("tag_start[end] --- #{name} --- #{attrs.inspect} --- #{@stack.inspect}") if DEBUG
+        pp("tag_start  [end] --- #{name} --- #{attrs.inspect} --- #{@stack.inspect}") if DEBUG
       end
 
       def tag_end(name)
-        pp("tag_end[begin] --- #{name} --- #{@stack.inspect}") if DEBUG
+        pp("tag_end  [begin] --- #{name} --- #{@stack.inspect}") if DEBUG
 
         @result = @stack.pop
+
         if @result == :no_op
           pp("  tag_end: NOOP") if DEBUG
         elsif @stack.last.kind_of? Symbol
@@ -118,6 +123,15 @@ module Taobao
           s = @stack.pop
           if s != :no_op
             @stack.last.send(s, @result)
+          end
+
+          if @stack.last.is_a? Taobao::Model and name == @stack.last.class.elm_name
+            elm = @stack.pop
+            if @stack.last.is_a? Array
+              @stack.last.push(elm)
+            else
+              @stack.push(elm)
+            end
           end
         elsif @result.kind_of? Array and @stack.size > 0
           pp("  tag_end: assign #{@stack.last}") if DEBUG
@@ -131,7 +145,7 @@ module Taobao
           @stack.last.push @result
         end
 
-        pp("tag_end[end] --- #{name} --- #{@stack.inspect} --- #{@result.inspect}") if DEBUG
+        pp("tag_end    [end] --- #{name} --- #{@stack.inspect}") if DEBUG
       end
 
       def text(text)

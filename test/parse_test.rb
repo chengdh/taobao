@@ -12,11 +12,6 @@ class ParseTest < Test::Unit::TestCase
       assert_equal result, "error_message"
     end
 
-    should "should parse normal response xml" do
-      result = Taobao::Parse.new.process(normal_response_xml)
-      assert_equal result, "0"
-    end
-
     should "should parse simple user info xml" do
       result = Taobao::Parse.new.process(simple_user_info_xml)
       assert_equal result.size,1
@@ -36,8 +31,10 @@ class ParseTest < Test::Unit::TestCase
 
     should "should handle error_rsp" do
       result = Taobao::Parse.new.process(error_rsp_xml)
-      assert_equal result.code, "11"
-      assert_equal result.msg, "error-message"
+      assert_equal result.code, "40"
+      assert_equal result.msg, "Missing required arguments:nick"
+      assert_equal result.args.size, 9
+      assert_equal result.args[0].name, 'app_key'
     end
 
     should "should handle item_cat" do
@@ -849,13 +846,47 @@ class ParseTest < Test::Unit::TestCase
       </rsp>
     XML
   end
+
   def error_rsp_xml
     <<-XML
       <?xml version="1.0" encoding="utf-8" ?>
-      <error_rsp>
-        <code>11</code>
-        <msg>error-message</msg>
-      </error_rsp>
+    <error_rsp>
+      <args>
+        <arg name="app_key">
+          <![CDATA[12017774]]>
+        </arg>
+        <arg name="fields">
+          <![CDATA[iid, detail_url, num_iid, title, desc, pic_path, price]]>
+        </arg>
+        <arg name="format">
+          <![CDATA[xml]]>
+        </arg>
+        <arg name="iid">
+          <![CDATA[70df88dc1a775bc734f37c94595c7017]]>
+        </arg>
+        <arg name="method">
+          <![CDATA[taobao.item.get]]>
+        </arg>
+        <arg name="nickaa">
+          <![CDATA[alipublic03]]>
+        </arg>
+        <arg name="sign">
+          <![CDATA[F265269A61A938284A3E835FAF5EB1A8]]>
+        </arg>
+        <arg name="timestamp">
+          <![CDATA[2009-12-06 22:08:14]]>
+        </arg>
+        <arg name="v">
+          <![CDATA[1.0]]>
+        </arg>
+      </args>
+      <code>
+        40
+      </code>
+      <msg>
+        <![CDATA[Missing required arguments:nick]]>
+      </msg>
+    </error_rsp>
     XML
   end
 
@@ -863,13 +894,6 @@ class ParseTest < Test::Unit::TestCase
     <<-XML
       <?xml version="1.0" encoding="utf-8" ?>
       <error>error_message</error>
-    XML
-  end
-
-  def normal_response_xml
-    <<-XML
-    <?xml version="1.0" encoding="utf-8" ?>
-    <String>0</String>
     XML
   end
 

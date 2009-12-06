@@ -3,6 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require "taobao/service"
 require "taobao/parse"
+require "taobao/models/arg"
 require "taobao/models/error"
 require "taobao/models/error_rsp"
 require "taobao/models/simple_user_info"

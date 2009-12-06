@@ -23,7 +23,7 @@ module Taobao
     end
 
     def invoke
-      res = Net::HTTP.post_form(URI.parse(ENV['TAOBAO_REST_ENDPOINT']), @params)
+      Net::HTTP.post_form(URI.parse(ENV['TAOBAO_REST_ENDPOINT']), @params)
     end
   end
 end

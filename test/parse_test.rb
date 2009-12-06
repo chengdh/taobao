@@ -234,6 +234,29 @@ class ParseTest < Test::Unit::TestCase
       assert_equal result[0].bulletin, "<p>1111是</p>"
     end
 
+    should "process taobao.sellercats.list.get" do
+      result = Taobao::Parse.new.process(taobao_sellercats_list_get_xml)
+    end
+
+  end
+
+  def taobao_sellercats_list_get_xml
+    <<-XML
+    <rsp>
+      <seller_cat>
+        <cid>151043913</cid>
+        <parent_cid>151043912</parent_cid>
+        <name>rtrtr gfgf</name>
+        <sort_order>1</sort_order>
+      </seller_cat>
+      <seller_cat>
+        <cid>152742909</cid>
+        <parent_cid>151182934</parent_cid>
+        <name>33333333333</name>
+        <sort_order>1</sort_order>
+      </seller_cat>
+    </rsp>
+    XML
   end
 
   def taobao_shop_get_xml

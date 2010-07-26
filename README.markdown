@@ -1,7 +1,9 @@
 # Taobao
 
-The plugin enable easy integration with the [Taobao Open Platform](http://open.taobao.com/)
 
+The plugin enable easy integration with the [Taobao Open Platform](http://open.taobao.com/)
+This is a fork of taweili/taobao,add api 2.0 support 
+ 
 # Requirements
 
 # Installation and configuration

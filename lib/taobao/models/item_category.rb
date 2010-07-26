@@ -3,7 +3,7 @@ require 'taobao/model'
 module Taobao
   class ItemCategory < Model
     def self.elm_name
-      "category_list"
+      "item_category"
     end
 
     def self.attr_names

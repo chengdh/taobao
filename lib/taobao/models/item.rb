@@ -58,6 +58,5 @@ module Taobao
     for a in attr_names
       attr_accessor a
     end
-
   end
 end

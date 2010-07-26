@@ -60,11 +60,11 @@ module Taobao
         {
           "SimpleUserInfo-array" => TotalArray,
           "rsp" => TotalArray,
-          "item_props" => TotalArray,
           "prop_values" => TotalArray,
           "product_imgs" => TotalArray,
           "items" => TotalArray,
-          "item_cats" => TotalArray,
+          "item_props" => TotalArray,
+          "item_categories" => TotalArray,
           "prop_values" => TotalArray,
           "products" => TotalArray,
           "seller_cats" => TotalArray,

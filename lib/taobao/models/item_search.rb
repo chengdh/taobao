@@ -7,13 +7,13 @@ require 'taobao/model'
 module Taobao
   class ItemSearch < Model
     def self.elm_name
-      "itemsearch"
+      "item_search"
     end
 
     def self.attr_names
       [
-       :item_lists,
-       :category_lists
+       :items,
+       :item_categories
       ]
     end
 

@@ -3,7 +3,7 @@ require 'taobao/model'
 module Taobao
   class ProductPropImg < Model
     def self.elm_name
-      "productPropImg"
+      "product_prop_img"
     end
 
     def self.attr_names

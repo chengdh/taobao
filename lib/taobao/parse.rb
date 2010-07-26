@@ -33,6 +33,7 @@ module Taobao
          Taobao::ItemCat,
          Taobao::ItemCategory,
          Taobao::ItemProp,
+         Taobao::NotifyItem,
          Taobao::SellerCat,
          Taobao::PropValue,
          Taobao::Item,
@@ -50,9 +51,7 @@ module Taobao
       def elm_name_to_class_default
         {
           "buyer_credit" => Taobao::UserCredit,
-          "seller_credit" => Taobao::UserCredit,
-          "ProductPropImg" => Taobao::ProductPropImg,
-          "item_list" => Taobao::Item
+          "seller_credit" => Taobao::UserCredit
         }
       end
 
@@ -64,6 +63,8 @@ module Taobao
           "product_imgs" => TotalArray,
           "items" => TotalArray,
           "item_props" => TotalArray,
+          "item_cats" => TotalArray,
+          "notify_items" => TotalArray,
           "item_categories" => TotalArray,
           "prop_values" => TotalArray,
           "products" => TotalArray,

@@ -3,10 +3,11 @@ require 'taobao/model'
 module Taobao
   class ErrorRsp < Error
     def self.elm_name
-      "error_rsp"
+      "error_response"
     end
-    
-    def push_sym(stack)
+
+    def to_s
+      "Taobao::ErrorRsp(#{code}): #{msg}"
     end
   end
 end

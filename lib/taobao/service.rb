@@ -13,7 +13,7 @@ module Taobao
         'app_key' => ENV['TAOBAO_APP_KEY'],
         'method'=> method,
         'format'=>'xml',
-        'v'=>'1.0',
+        'v'=>'2.0',
         'timestamp'=> Time.now.strftime("%Y-%m-%d %H:%M:%S")
       }
 

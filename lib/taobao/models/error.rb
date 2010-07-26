@@ -21,9 +21,5 @@ module Taobao
     def to_s
       "Taobao::Error(#{code}): #{msg}"
     end
-
-    def push_sym(stack)
-      stack.push(:msg=)
-    end
   end
 end

@@ -38,6 +38,7 @@ module Taobao
        :num_iid,
        :outer_id,
        :pic_path,
+       :pic_url,
        :post_fee,
        :postage_id,
        :price,

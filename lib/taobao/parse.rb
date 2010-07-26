@@ -4,13 +4,14 @@ require 'pp'
 
 module Taobao
   class Parse
-    DEBUG = false
+    DEBUG = true
 
     class MyListener
       include REXML::StreamListener
       attr_accessor :result
 
       class TotalArray < Array
+        #以下属性在2.0中无用
         attr_accessor :total
         attr_accessor :totalResults
         attr_accessor :lastModified
@@ -23,7 +24,6 @@ module Taobao
       def model_classes
         [
          Taobao::Arg,
-         Taobao::Error,
          Taobao::ErrorRsp,
          Taobao::SimpleUserInfo,
          Taobao::AppSubscControl,
@@ -62,8 +62,11 @@ module Taobao
           "rsp" => TotalArray,
           "prop_values" => TotalArray,
           "product_imgs" => TotalArray,
-          "item_lists" => TotalArray,
-          "category_lists" => TotalArray,
+          "items" => TotalArray,
+          "item_cats" => TotalArray,
+          "prop_values" => TotalArray,
+          "products" => TotalArray,
+          "seller_cats" => TotalArray,
           "args" => TotalArray
         }
       end
@@ -90,6 +93,7 @@ module Taobao
 
       def tag_start(name, attrs)
         pp("tag_start[begin] --- #{name} --- #{attrs.inspect} --- #{@stack.inspect}") if DEBUG
+        return if (name !="error_response") && (name.include?("response") || name.include?("total_results"))
 
         s_size = @stack.size
 
@@ -114,6 +118,7 @@ module Taobao
       def tag_end(name)
         pp("tag_end  [begin] --- #{name} --- #{@stack.inspect}") if DEBUG
 
+        return if (name !="error_response") && (name.include?("response") || name.include?("total_results"))
         @result = @stack.pop
 
         if @result == :no_op
@@ -170,6 +175,5 @@ module Taobao
       pp e.backtrace
       throw e
     end
-
   end
 end

@@ -8,18 +8,13 @@ module Taobao
 
     def self.attr_names
       [
-       :name,
-       :val
+       :key,
+       :value
       ]
     end
 
     for a in attr_names
       attr_accessor a
     end
-
-    def push_sym(stack)
-      stack.push(:val=)
-    end
-
   end
 end

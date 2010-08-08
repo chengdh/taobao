@@ -4,7 +4,7 @@ require 'pp'
 
 module Taobao
   class Parse
-    DEBUG = true
+    DEBUG = false
 
     class MyListener
       include REXML::StreamListener
@@ -85,9 +85,6 @@ module Taobao
           @attr_names += [:total_results]
           @attr_names += [:last_modified]
         end
-        if array_elements.keys.include?(name)
-          return false
-        end
         @attr_names.include?(name.to_sym)
       end
 
@@ -112,7 +109,7 @@ module Taobao
 
         if @stack.size == s_size # nothing get push to stack
           if @stack.size == 0
-            pp "push root tag "
+            pp "push root tag "  if DEBUG
             #加入一个空的根元素
             @stack.push TotalArray.new
           else
@@ -134,7 +131,15 @@ module Taobao
           pp("  tag_end: assign #{@stack.last}") if DEBUG
           s = @stack.pop
           if s != :no_op
-            @stack.last.send(s, @result)
+            #FIXME 在调用taobao.items.get时,此处会出错,当出错时,重新将@result压入栈
+            #判断@stack.last是否具有对应的方法
+            if @stack.last.methods.include?(s.to_s)
+              @stack.last.send(s, @result)
+            end
+          end
+          #如果相邻两个元素都是数组,则将两个数组合并
+          if @stack.last.kind_of? Array and @result.kind_of? Array
+            @result.each {|i| @stack.last.push(i)}
           end
 
           if @stack.last.is_a? Taobao::Model and name == @stack.last.class.elm_name

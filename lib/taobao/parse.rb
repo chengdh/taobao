@@ -36,6 +36,7 @@ module Taobao
           Taobao::SellerCat,
           Taobao::PropValue,
           Taobao::Item,
+          Taobao::ItemImg,
           Taobao::ItemCategory,
           Taobao::ItemSearch,
           Taobao::Trade,
@@ -43,7 +44,12 @@ module Taobao
           Taobao::ProductImg,
           Taobao::ProductPropImg,
           Taobao::Shop,
-          Taobao::TaobaokeItem
+          Taobao::ShopScore,
+          Taobao::TaobaokeItem,
+          Taobao::Sku,
+          Taobao::Postage,
+          Taobao::PostageMode
+
         ]
       end
 
@@ -62,13 +68,17 @@ module Taobao
           "product_imgs" => TotalArray,
           "items" => TotalArray,
           "item_props" => TotalArray,
+          "item_imgs" => TotalArray,
           "item_cats" => TotalArray,
           "notify_items" => TotalArray,
           "item_categories" => TotalArray,
           "prop_values" => TotalArray,
           "products" => TotalArray,
           "seller_cats" => TotalArray,
-          "args" => TotalArray
+          "args" => TotalArray,
+          "skus" => TotalArray,
+          "postages" => TotalArray,
+          "postage_modes" => TotalArray
         }
       end
 

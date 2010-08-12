@@ -1,23 +1,22 @@
 require 'taobao/model'
-
+#邮费模板
 module Taobao
-  class SellerCat < Model
+  class PostageMode < Model
     def self.elm_name
-      "seller_cat"
+      "postage_mode"
     end
-
+    
     def self.attr_names
       [
-       :cid,
-       :parent_cid,
-       :name,
-       :pic_url,
-       :sort_order,
-       :created,
-       :modified
+       :postage_id,
+       :id,
+       :type,
+       :dests,
+       :price,
+       :increase
       ]
     end
-
+    
     for a in attr_names
       attr_accessor a
     end

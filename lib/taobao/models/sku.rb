@@ -1,20 +1,23 @@
 require 'taobao/model'
 
 module Taobao
-  class SellerCat < Model
+  class Sku < Model
     def self.elm_name
-      "seller_cat"
+      "sku"
     end
 
     def self.attr_names
       [
-       :cid,
-       :parent_cid,
-       :name,
-       :pic_url,
-       :sort_order,
+       :sku_id,
+       :iid,
+       :num_iid,
+       :properties,
+       :quantity,
+       :price,
+       :outer_id,
        :created,
-       :modified
+       :modified,
+       :status
       ]
     end
 
